@@ -23,6 +23,22 @@ namespace Komment
         public MainWindow()
         {
             InitializeComponent();
+
+            //Test user data
+            //Here we have to first initialize the User
+            User.username = "lukas3";
+            User.password = "ferkel";
+
+            NetworkHandler.Initialize();
+            InitializeNetworkConnection();
+
+
+        }
+
+        private async void InitializeNetworkConnection()
+        {
+            var response = await NetworkHandler.LoadAllNotesAsync();
+            MessageBox.Show(response);
         }
     }
 }
