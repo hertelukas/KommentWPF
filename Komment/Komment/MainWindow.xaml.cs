@@ -37,8 +37,13 @@ namespace Komment
 
         private async void InitializeNetworkConnection()
         {
-            var response = await NetworkHandler.LoadAllNotesAsync();
-            MessageBox.Show(response);
+            var notes = await NetworkHandler.LoadAllNotesAsync();
+
+            if(notes != null)
+            {
+                User.Data.notes = notes;
+                await Logger.LogInfo($"Loaded {User.Data.notes.Count.ToString()} notes");
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Komment
     {
         public string Title { get; set; }
         public string Content { get; set; }
-        public DateTime LastEdited { get; set; }
+        public string LastEdited { get; set; }
         public string[] Folders;
         public string _id { get; set; }
 

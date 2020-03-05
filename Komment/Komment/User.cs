@@ -10,5 +10,10 @@ namespace Komment
     {
         public static string username;
         public static string password;
+
+        public static class Data
+        {
+            public static List<Note> notes;
+        }
     }
 }
