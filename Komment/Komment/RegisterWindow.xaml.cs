@@ -22,12 +22,20 @@ namespace Komment
 
         private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            if(Password.Password == PasswordConfirm.Password && Username.Text.Length > 4 && Password.Password.Length > 6)
+            if(Password.Password == PasswordConfirm.Password && Username.Text.Length > 4 && Password.Password.Length > 4)
             {
                 User.username = Username.Text;
                 User.password = Password.Password;
-                await User.RegisterAsync();
-                Close();
+                string response = await User.RegisterAsync();
+                if(response == null)
+                {
+                    Close();
+                }
+                else
+                {
+                    WarningText.Text = response;
+                    WarningText.Visibility = Visibility.Visible;
+                }
             }
             else if(Password.Password != PasswordConfirm.Password)
             {

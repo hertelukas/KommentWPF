@@ -11,19 +11,14 @@ namespace Komment
         {
             InitializeComponent();
 
-            //Test user data
-            //Here we have to first initialize the User
-            User.username = "lukas3";
-            User.password = "ferkel";
+            NetworkHandler.Initialize();
+            InitializeNetworkConnection();
 
             if (!User.IsLoggedIn)
             {
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.Show();
             }
-
-            NetworkHandler.Initialize();
-            InitializeNetworkConnection();
         }
 
         private async void InitializeNetworkConnection()
