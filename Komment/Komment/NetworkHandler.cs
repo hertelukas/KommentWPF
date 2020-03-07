@@ -31,7 +31,7 @@ namespace Komment
 
                 if (String.IsNullOrEmpty(responseString))
                 {
-                    await Logger.LogError("Empty or no response received.");
+                    _ = Logger.LogError("Empty or no response received.");
                     return null;
                 }
 
@@ -41,13 +41,13 @@ namespace Komment
                 }
                 catch (Exception e)
                 {
-                    await Logger.LogException(e);
+                    _ = Logger.LogException(e);
                     return null;
                 }
             }
             catch(Exception e)
             {
-                await Logger.LogException(e);
+                _ = Logger.LogException(e);
                 return null;
             }
         }
@@ -66,12 +66,22 @@ namespace Komment
                 var response = await client.PostAsync(apiURL + "/notes", content);
 
                 var responseString = await response.Content.ReadAsStringAsync();
-                await Logger.LogInfo(responseString);
+                _ = Logger.LogInfo(responseString);
             }
             catch(Exception e)
             {
-                await Logger.LogException(e);
+                _ = Logger.LogException(e);
             }
+        }
+
+        public static async Task RegisterAsync()
+        {
+
+        }
+
+        public static async Task<bool> AuthenticateAsync()
+        {
+            return true;
         }
 
 
