@@ -9,7 +9,7 @@ namespace Komment
 {
     public static class UserData
     {
-        private static readonly string _savePath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        private static readonly string _savePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
         public async static Task<bool> LoadUser()
         {
@@ -34,7 +34,7 @@ namespace Komment
 
         }
 
-        public static async void SaveUser()
+        public static async Task SaveUser()
         {
             using (StreamWriter outputFile = new StreamWriter(Path.Combine(_savePath, "userdata.kmt")))
             {

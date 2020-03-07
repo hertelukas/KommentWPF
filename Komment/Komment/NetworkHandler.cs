@@ -159,7 +159,18 @@ namespace Komment
         private static Dictionary<string, string> ParsePOSTUsers(string stringToParse)
         {
             JObject JResultObject = JObject.Parse(stringToParse);
-            return JResultObject.ToObject<Dictionary<string, string>>();
+            string message;
+            string code;
+
+            message = (string)JResultObject["message"];
+            code = (string)JResultObject["code"];
+
+            Dictionary<string, string> response = new Dictionary<string, string>();
+
+            response.Add("message", message);
+            response.Add("code", code);
+
+            return response;
         }
     }
 }

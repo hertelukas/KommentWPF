@@ -26,10 +26,11 @@ namespace Komment
             {
                 User.username = Username.Text;
                 User.password = Password.Password;
+                NetworkHandler.Initialize();
                 string response = await User.RegisterAsync();
                 if(response == null)
                 {
-                    UserData.SaveUser();
+                    await UserData.SaveUser();
                     Close();
                 }
                 else
