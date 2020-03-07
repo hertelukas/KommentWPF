@@ -12,9 +12,14 @@ namespace Komment
         public static string password;
         public static bool IsLoggedIn;
 
-        public static async Task IsLoggedInAsync()
+        public static async Task LogInAsync()
         {
-            IsLoggedIn = await NetworkHandler.AuthenticateAsync();             
+            IsLoggedIn = await NetworkHandler.AuthenticateAsync();
+        }
+
+        public static async Task RegisterAsync()
+        {
+            IsLoggedIn = await NetworkHandler.RegisterAsync();
         }
 
         public static class Data

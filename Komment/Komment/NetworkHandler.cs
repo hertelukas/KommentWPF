@@ -74,9 +74,9 @@ namespace Komment
             }
         }
 
-        public static async Task RegisterAsync()
+        public static async Task<bool> RegisterAsync()
         {
-
+            return true;
         }
 
         public static async Task<bool> AuthenticateAsync()

@@ -12,14 +12,17 @@ namespace Komment
             InitializeComponent();
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            User.username = Username.Text;
+            User.password = Password.Password;
+            await User.LogInAsync();
+            Close();
         }
 
         private void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
             RegisterWindow registerWindow = new RegisterWindow();
             registerWindow.Show();
         }

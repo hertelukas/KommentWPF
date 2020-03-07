@@ -10,6 +10,7 @@ namespace Komment
         public RegisterWindow()
         {
             InitializeComponent();
+            WarningText.Visibility = Visibility.Hidden;
         }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
@@ -19,9 +20,35 @@ namespace Komment
             loginWindow.Show();
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private async void RegisterButton_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            if(Password.Password == PasswordConfirm.Password && Username.Text.Length > 4 && Password.Password.Length > 6)
+            {
+                User.username = Username.Text;
+                User.password = Password.Password;
+                await User.RegisterAsync();
+                Close();
+            }
+            else if(Password.Password != PasswordConfirm.Password)
+            {
+                WarningText.Text = "Passwords do not match!";
+                WarningText.Visibility = Visibility.Visible;
+            }
+            else if(Username.Text.Length <= 4)
+            {
+                WarningText.Text = "Username is too short!";
+                WarningText.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                WarningText.Text = "Password is too short!";
+                WarningText.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Input_Changed(object sender, RoutedEventArgs e)
+        {
+            WarningText.Visibility = Visibility.Hidden;
         }
     }
 }
