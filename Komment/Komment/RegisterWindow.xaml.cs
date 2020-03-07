@@ -29,6 +29,7 @@ namespace Komment
                 string response = await User.RegisterAsync();
                 if(response == null)
                 {
+                    UserData.SaveUser();
                     Close();
                 }
                 else

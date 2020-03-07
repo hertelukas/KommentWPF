@@ -10,11 +10,20 @@ namespace Komment
         public MainWindow()
         {
             InitializeComponent();
+            InitializeUser();
 
-            NetworkHandler.Initialize();
-            InitializeNetworkConnection();
+            //InitializeNetworkConnection();
 
-            if (!User.IsLoggedIn)
+
+        }
+
+        private async void InitializeUser()
+        {
+            var userSaved = await UserData.LoadUser();
+            if (userSaved)
+                NetworkHandler.Initialize();
+
+            if (!userSaved)
             {
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.Show();
