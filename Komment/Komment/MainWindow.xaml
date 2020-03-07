@@ -3,10 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Komment"
         mc:Ignorable="d"
-        Title="Komment" Height="450" Width="800" Background="{DynamicResource MaterialDesignDarkBackground}" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="Komment" Height="600" Width="1024" Background="{DynamicResource MaterialDesignDarkBackground}" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" FontFamily="Raleway">
     <Grid>
-        
+        <StackPanel>
+            <Grid x:Name="TopBar" Background="{DynamicResource PrimaryHueMidBrush}" Height="40" MouseDown="TopBar_MouseDown">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="Minimize" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="#FF222222" Click="Minimize_Click">
+                        <materialDesign:PackIcon Kind="WindowMinimize"/>
+                    </Button>
+                    <Button x:Name="Maximize" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="#FF222222" Click="Maximize_Click">
+                        <materialDesign:PackIcon Kind="WindowMaximize"/>
+                    </Button>
+                    <Button x:Name="Close" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="#FF222222" Click="Close_Click">
+                        <materialDesign:PackIcon Kind="Close"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Grid x:Name="SideBar" Background="#FF222222" Width="250"  HorizontalAlignment="Left" Margin="0 40 0 0">
+            <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.2}">
+                <Grid x:Name="GridCursor" Margin="0 60 0 0" Background="{DynamicResource PrimaryHueMidBrush}" Width="10" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top"/>
+            </materialDesign:TransitioningContent>
+            <ListView x:Name="ListViewMenu" Foreground="{DynamicResource MaterialDesignDarkForeground}" Margin="0 60 0 0" SelectionChanged="ListViewMenu_SelectionChanged">
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="User" Width="30" Height="30" VerticalAlignment="Center"  Margin="10"/>
+                        <TextBlock x:Name="UsernameTextBlock" Text="Login" FontSize="24" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Home" Width="30" Height="30" VerticalAlignment="Center"  Margin="10"/>
+                        <TextBlock x:Name="a" Text="Home" FontSize="24" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>
