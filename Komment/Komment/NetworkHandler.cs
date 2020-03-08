@@ -15,18 +15,24 @@ namespace Komment
         private static readonly string apiURL = "https://kommentapi.herokuapp.com";
         private static readonly HttpClient client = new HttpClient();
 
-        public static event EventHandler LoggedIn;
         public static event EventHandler NotesLoaded;
+
+        private static bool initialized = false;
 
         public static void Initialize()
         {
+            //Authenticate user here
             client.DefaultRequestHeaders.Add("username", User.username);
             client.DefaultRequestHeaders.Add("password", User.password);
+            initialized = true;
         }
 
-        //Return functions
-        public static async Task<List<Note>> LoadAllNotesAsync() 
+        #region Web Requests
+        public static async Task LoadAllNotesAsync() 
         {
+            if (!initialized)
+                Initialize();
+
             try
             {
                 var response = await client.GetAsync(apiURL + "/notes");
@@ -35,24 +41,21 @@ namespace Komment
                 if (String.IsNullOrEmpty(responseString))
                 {
                     _ = Logger.LogError("Empty or no response received.");
-                    return null;
                 }
 
                 try
                 {
+                    UserData.Notes = ParseGETNotes(responseString);
                     OnNotesLoaded();
-                    return ParseGETNotes(responseString);
                 }
                 catch (Exception e)
                 {
                     _ = Logger.LogException(e);
-                    return null;
                 }
             }
             catch(Exception e)
             {
                 _ = Logger.LogException(e);
-                return null;
             }
         }
 
@@ -93,6 +96,7 @@ namespace Komment
                 {
                     try
                     {
+                        _ = Logger.LogInfo(responseString);
                         var parsedDict = ParsePOSTUsers(responseString);
                         string code;
                         string message;
@@ -108,7 +112,6 @@ namespace Komment
                             {
                                 if (result == 100)
                                 {
-                                    OnLoggedIn();
                                     return RegistrationResponse.Success;
                                 }
 
@@ -153,6 +156,8 @@ namespace Komment
             return true;
         }
 
+        #endregion
+
         #region Private functions
         private static List<Note> ParseGETNotes(string stringToParse)
         {
@@ -160,7 +165,9 @@ namespace Komment
             JObject JResultUser = JResultObject.Value<JObject>("user");
 
             JArray JNotes = (JArray)JResultUser["notes"];
-            return JNotes.ToObject<List<Note>>();
+            var notes = JNotes.ToObject<List<Note>>();
+            _ = Logger.LogInfo($"There were {JNotes.ToObject<List<Note>>().Count} notes found.");
+            return notes;
         }
         
         private static Dictionary<string, string> ParsePOSTUsers(string stringToParse)
@@ -182,11 +189,6 @@ namespace Komment
         #endregion
 
         #region Events
-        static void OnLoggedIn()
-        {
-            LoggedIn?.Invoke(null, null);
-        }
-
         static void OnNotesLoaded()
         {
             NotesLoaded?.Invoke(null, null);

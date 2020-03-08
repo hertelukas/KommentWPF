@@ -7,7 +7,13 @@ namespace Komment
 {
     public static class Logger
     {
-        private static readonly string _docPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static readonly string _appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static readonly string _docPath = Path.Combine(_appDataPath, "Komment");
+
+        public static void InitializeFolders()
+        {
+            Directory.CreateDirectory(_docPath);
+        }
 
         public async static Task LogException(Exception e)
         {

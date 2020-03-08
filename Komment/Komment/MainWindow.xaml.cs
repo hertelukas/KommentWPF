@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace Komment
@@ -8,21 +9,26 @@ namespace Komment
     /// </summary>
     public partial class MainWindow : Window
     {
+        UserPage userPage = new UserPage();
+        SettingsPage settingsPage = new SettingsPage();
+        HomePage homePage = new HomePage();
+
         public MainWindow()
         {
             InitializeComponent();
             InitializeUser();
+            Logger.InitializeFolders();
+            InitializeUI();
         }
 
         private async void InitializeUser()
         {
-            NetworkHandler.LoggedIn += DownloadUserData;
-
-            var userLoggedIn = await UserData.LoadUser();
-            if (userLoggedIn)
+            var userLoggedInLocal = await UserData.LoadUser();
+            if (userLoggedInLocal)
             {
-                NetworkHandler.Initialize();
                 UsernameTextBlock.Text = $"Hello {User.username}!";
+                NetworkHandler.Initialize();
+                await NetworkHandler.LoadAllNotesAsync();
             }
             else
             {
@@ -30,11 +36,6 @@ namespace Komment
                 loginWindow.Show();
             }
 
-        }
-
-        private async void DownloadUserData(object source, EventArgs e)
-        {
-            UserData.notes = await NetworkHandler.LoadAllNotesAsync();
         }
 
         #region UI Elements
@@ -72,12 +73,39 @@ namespace Komment
         {
             int index = ListViewMenu.SelectedIndex;
             MoveCursorMenu(index);
+            LoadPage(index);
         }
 
         private void MoveCursorMenu(int index)
         {
             TrainsitionigContentSlide.OnApplyTemplate();
             GridCursor.Margin = new Thickness(0, 60 + (60 * index), 0, 0);
+        }
+
+        private void LoadPage(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    MainWindowFrame.Content = userPage;
+                    break;
+
+                case 1:
+                    MainWindowFrame.Content = homePage;
+                    break;
+
+                case 2:
+                    MainWindowFrame.Content = settingsPage;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void InitializeUI()
+        {
+            MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
         }
 
         #endregion

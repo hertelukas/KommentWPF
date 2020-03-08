@@ -9,9 +9,10 @@ namespace Komment
 {
     public static class UserData
     {
-        private static readonly string _savePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static readonly string _appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static readonly string _savePath = Path.Combine(_appDataPath, "Komment");
 
-        public static List<Note> notes = new List<Note>();
+        public static List<Note> Notes = new List<Note>();
 
         public async static Task<bool> LoadUser()
         {

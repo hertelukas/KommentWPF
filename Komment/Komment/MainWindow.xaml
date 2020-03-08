@@ -7,8 +7,8 @@
         xmlns:local="clr-namespace:Komment"
         mc:Ignorable="d"
         Title="Komment" Height="600" Width="1024" Background="{DynamicResource MaterialDesignDarkBackground}" 
-        WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" FontFamily="Raleway"
-        ResizeMode="NoResize">
+        WindowStartupLocation="CenterScreen" WindowStyle="None" FontFamily="Raleway"
+        ResizeMode="NoResize" WindowState="Maximized">
     <Grid>
         <StackPanel>
             <Grid x:Name="TopBar" Background="{DynamicResource PrimaryHueMidBrush}" Height="40" MouseDown="TopBar_MouseDown">
