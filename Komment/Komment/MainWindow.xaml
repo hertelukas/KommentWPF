@@ -6,18 +6,20 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:Komment"
         mc:Ignorable="d"
-        Title="Komment" Height="600" Width="1024" Background="{DynamicResource MaterialDesignDarkBackground}" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" FontFamily="Raleway">
+        Title="Komment" Height="600" Width="1024" Background="{DynamicResource MaterialDesignDarkBackground}" 
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" FontFamily="Raleway"
+        ResizeMode="NoResize">
     <Grid>
         <StackPanel>
             <Grid x:Name="TopBar" Background="{DynamicResource PrimaryHueMidBrush}" Height="40" MouseDown="TopBar_MouseDown">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="Minimize" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="#FF222222" Click="Minimize_Click">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0" VerticalAlignment="Center">
+                    <Button x:Name="Minimize" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Click="Minimize_Click">
                         <materialDesign:PackIcon Kind="WindowMinimize"/>
                     </Button>
-                    <Button x:Name="Maximize" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="#FF222222" Click="Maximize_Click">
+                    <Button x:Name="Maximize" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Click="Maximize_Click">
                         <materialDesign:PackIcon Kind="WindowMaximize"/>
                     </Button>
-                    <Button x:Name="Close" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Foreground="#FF222222" Click="Close_Click">
+                    <Button x:Name="Close" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Click="Close_Click">
                         <materialDesign:PackIcon Kind="Close"/>
                     </Button>
                 </StackPanel>
@@ -37,10 +39,17 @@
                 <ListViewItem Height="60">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Home" Width="30" Height="30" VerticalAlignment="Center"  Margin="10"/>
-                        <TextBlock x:Name="a" Text="Home" FontSize="24" VerticalAlignment="Center"/>
+                        <TextBlock Text="Home" FontSize="24" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Settings" Width="30" Height="30" VerticalAlignment="Center"  Margin="10"/>
+                        <TextBlock Text="Settings" FontSize="24" VerticalAlignment="Center"/>
                     </StackPanel>
                 </ListViewItem>
             </ListView>
         </Grid>
+        <Frame x:Name="MainWindowFrame" Margin="250 40 0 0" NavigationUIVisibility="Hidden" Source="{Binding}"/>
     </Grid>
 </Window>

@@ -11,6 +11,8 @@ namespace Komment
     {
         private static readonly string _savePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
+        public static List<Note> notes = new List<Note>();
+
         public async static Task<bool> LoadUser()
         {
             if (File.Exists(Path.Combine(_savePath, "userdata.kmt")))

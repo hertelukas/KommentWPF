@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Komment
 {
@@ -15,6 +16,8 @@ namespace Komment
 
         private async void InitializeUser()
         {
+            NetworkHandler.LoggedIn += DownloadUserData;
+
             var userLoggedIn = await UserData.LoadUser();
             if (userLoggedIn)
             {
@@ -26,17 +29,12 @@ namespace Komment
                 LoginWindow loginWindow = new LoginWindow();
                 loginWindow.Show();
             }
+
         }
 
-        private async void InitializeNetworkConnection()
+        private async void DownloadUserData(object source, EventArgs e)
         {
-            var notes = await NetworkHandler.LoadAllNotesAsync();
-
-            if (notes != null)
-            {
-                User.Data.notes = notes;
-                _ = Logger.LogInfo($"Loaded {User.Data.notes.Count.ToString()} notes");
-            }
+            UserData.notes = await NetworkHandler.LoadAllNotesAsync();
         }
 
         #region UI Elements
@@ -83,7 +81,6 @@ namespace Komment
         }
 
         #endregion
-
 
     }
 }

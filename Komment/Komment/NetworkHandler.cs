@@ -15,6 +15,9 @@ namespace Komment
         private static readonly string apiURL = "https://kommentapi.herokuapp.com";
         private static readonly HttpClient client = new HttpClient();
 
+        public static event EventHandler LoggedIn;
+        public static event EventHandler NotesLoaded;
+
         public static void Initialize()
         {
             client.DefaultRequestHeaders.Add("username", User.username);
@@ -37,6 +40,7 @@ namespace Komment
 
                 try
                 {
+                    OnNotesLoaded();
                     return ParseGETNotes(responseString);
                 }
                 catch (Exception e)
@@ -103,7 +107,10 @@ namespace Komment
                             if (int.TryParse(code, out int result))
                             {
                                 if (result == 100)
+                                {
+                                    OnLoggedIn();
                                     return RegistrationResponse.Success;
+                                }
 
                                 else if(result == 101)                                
                                     return RegistrationResponse.UserExists;
@@ -146,7 +153,7 @@ namespace Komment
             return true;
         }
 
-        //Private functions 
+        #region Private functions
         private static List<Note> ParseGETNotes(string stringToParse)
         {
             JObject JResultObject = JObject.Parse(stringToParse);
@@ -172,5 +179,19 @@ namespace Komment
 
             return response;
         }
+        #endregion
+
+        #region Events
+        static void OnLoggedIn()
+        {
+            LoggedIn?.Invoke(null, null);
+        }
+
+        static void OnNotesLoaded()
+        {
+            NotesLoaded?.Invoke(null, null);
+        }
+
+        #endregion
     }
 }
