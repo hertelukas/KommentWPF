@@ -14,7 +14,15 @@ namespace Komment
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            if(Username.Text.Length < 2|| Password.Password.Length < 2)
+            {
+                WarningText.Text = "Password or username too short";
+                WarningText.Visibility = Visibility.Visible;
+                return;
+            }
             WarningText.Text = "Logging you in...";
+            WarningText.Visibility = Visibility.Visible;
+
             User.username = Username.Text;
             User.password = Password.Password;
             string response = await User.LogInAsync();
