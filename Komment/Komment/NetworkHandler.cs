@@ -22,6 +22,7 @@ namespace Komment
         public static void Initialize()
         {
             //Authenticate user here
+            client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Add("username", User.username);
             client.DefaultRequestHeaders.Add("password", User.password);
             initialized = true;
@@ -30,7 +31,7 @@ namespace Komment
         #region Web Requests
         public static async Task LoadAllNotesAsync() 
         {
-            if (!initialized)
+            if (!initialized && User.username != null)
                 Initialize();
 
             try
@@ -97,16 +98,14 @@ namespace Komment
                     try
                     {
                         _ = Logger.LogInfo(responseString);
-                        var parsedDict = ParsePOSTUsers(responseString);
-                        string code;
-                        string message;
+                        var parsedDict = ParseBasicResponse(responseString);
 
-                        if (!parsedDict.TryGetValue("message", out message))
+                        if (!parsedDict.TryGetValue("message", out string message))
                         {
                             _ = Logger.LogError("No message found in registration response");
                             return RegistrationResponse.Error;
                         }
-                        else if (parsedDict.TryGetValue("code", out code))
+                        else if (parsedDict.TryGetValue("code", out string code))
                         {
                             if (int.TryParse(code, out int result))
                             {
@@ -115,9 +114,9 @@ namespace Komment
                                     return RegistrationResponse.Success;
                                 }
 
-                                else if(result == 101)                                
+                                else if (result == 101)
                                     return RegistrationResponse.UserExists;
-                                
+
                                 else
                                 {
                                     _ = Logger.LogError(message);
@@ -151,9 +150,59 @@ namespace Komment
             }
         }
 
-        public static async Task<bool> AuthenticateAsync()
+        public static async Task<LoginResponse> LoginAsync()
         {
-            return true;
+            Initialize();
+            try
+            {
+                var response = await client.GetAsync(apiURL + "/users");
+                var responseString = await response.Content.ReadAsStringAsync();
+                if (String.IsNullOrEmpty(responseString))
+                {
+                    _ = Logger.LogError("Empty or no response received.");
+                    return LoginResponse.Error;
+                }
+                else
+                {
+                    var parsedDict = ParseBasicResponse(responseString);
+
+                    if (!parsedDict.TryGetValue("message", out string message))
+                    {
+                        _ = Logger.LogError("No message found in registration response");
+                        return LoginResponse.Error;
+                    }
+                    else if (parsedDict.TryGetValue("code", out string code))
+                    {
+                        _ = Logger.LogInfo(message);
+                        if (int.TryParse(code, out int result))
+                        {
+                            if (result == 104)
+                            {
+                                return LoginResponse.Success;
+                            }
+                            else
+                            {
+                                _ = Logger.LogInfo("Login failed because: " + message);
+                                return LoginResponse.Unauthanticated;
+                            }
+                        }
+                        else
+                        {
+                            _ = Logger.LogError(message);
+                            return LoginResponse.Error;
+                        }
+                    }
+                    else
+                    {
+                        return LoginResponse.Error;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                _ = Logger.LogException(e);
+                return LoginResponse.Error;
+            }
         }
 
         #endregion
@@ -166,11 +215,10 @@ namespace Komment
 
             JArray JNotes = (JArray)JResultUser["notes"];
             var notes = JNotes.ToObject<List<Note>>();
-            _ = Logger.LogInfo($"There were {JNotes.ToObject<List<Note>>().Count} notes found.");
             return notes;
         }
         
-        private static Dictionary<string, string> ParsePOSTUsers(string stringToParse)
+        private static Dictionary<string, string> ParseBasicResponse(string stringToParse)
         {
             JObject JResultObject = JObject.Parse(stringToParse);
             string message;
@@ -179,13 +227,15 @@ namespace Komment
             message = (string)JResultObject["message"];
             code = (string)JResultObject["code"];
 
-            Dictionary<string, string> response = new Dictionary<string, string>();
-
-            response.Add("message", message);
-            response.Add("code", code);
+            Dictionary<string, string> response = new Dictionary<string, string>
+            {
+                { "message", message },
+                { "code", code }
+            };
 
             return response;
         }
+
         #endregion
 
         #region Events

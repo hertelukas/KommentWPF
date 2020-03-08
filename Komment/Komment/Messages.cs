@@ -13,5 +13,12 @@ namespace Komment
         Error,
         UserExists
     }
+
+    public enum LoginResponse
+    {
+        Success,
+        Unauthanticated,
+        Error
+    }
     
 }

@@ -12,9 +12,27 @@ namespace Komment
         public static string password;
         public static bool IsLoggedIn;
 
-        public static async Task LogInAsync()
+        public static async Task<string> LogInAsync()
         {
-            IsLoggedIn = await NetworkHandler.AuthenticateAsync();
+            LoginResponse loginResponse = await NetworkHandler.LoginAsync();
+            if(loginResponse == LoginResponse.Success)
+            {
+                IsLoggedIn = true;
+                await UserData.SaveUser();
+                NetworkHandler.Initialize();
+                await NetworkHandler.LoadAllNotesAsync();
+                return null;
+            }
+            else if(loginResponse == LoginResponse.Unauthanticated)
+            {
+                IsLoggedIn = false;
+                return "Password or username is wrong";
+            }
+            else
+            {
+                IsLoggedIn = false;
+                return "Error login you in. Try again later.";
+            }
         }
 
         public static async Task<string> RegisterAsync()

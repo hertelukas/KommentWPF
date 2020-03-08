@@ -33,7 +33,6 @@ namespace Komment
 
         private void UpdateNotesList()
         {
-            _ = Logger.LogInfo("Now we asign the notes");
             NoteView.ItemsSource = UserData.Notes;
         }
 

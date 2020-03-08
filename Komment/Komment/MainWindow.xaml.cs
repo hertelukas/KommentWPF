@@ -9,9 +9,9 @@ namespace Komment
     /// </summary>
     public partial class MainWindow : Window
     {
-        UserPage userPage = new UserPage();
-        SettingsPage settingsPage = new SettingsPage();
-        HomePage homePage = new HomePage();
+        readonly UserPage userPage = new UserPage();
+        readonly SettingsPage settingsPage = new SettingsPage();
+        readonly HomePage homePage = new HomePage();
 
         public MainWindow()
         {
@@ -26,7 +26,7 @@ namespace Komment
             var userLoggedInLocal = await UserData.LoadUser();
             if (userLoggedInLocal)
             {
-                UsernameTextBlock.Text = $"Hello {User.username}!";
+                UpdateUIAfterLogin();
                 NetworkHandler.Initialize();
                 await NetworkHandler.LoadAllNotesAsync();
             }
@@ -64,6 +64,11 @@ namespace Komment
         }
 
         //Other UI
+        public void UpdateUIAfterLogin()
+        {
+            UsernameTextBlock.Text = $"Hello {User.username}!";
+        }
+
         private void TopBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             DragMove();
@@ -109,6 +114,5 @@ namespace Komment
         }
 
         #endregion
-
     }
 }
