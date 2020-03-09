@@ -42,6 +42,10 @@ namespace Komment
             {
                 var index = NoteView.SelectedIndex;
                 Note note = UserData.Notes[index];
+
+                MainWindow mainWindow = (MainWindow)Window.GetWindow(this);
+                mainWindow.FullScreenFrame.Content = new NotePage(note);
+
                 NoteView.SelectedIndex = -1;
             }
         }

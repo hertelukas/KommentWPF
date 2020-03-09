@@ -51,5 +51,7 @@
             </ListView>
         </Grid>
         <Frame x:Name="MainWindowFrame" Margin="250 40 0 0" NavigationUIVisibility="Hidden" Source="{Binding}"/>
+        <Frame x:Name="FullScreenFrame" Margin="0 40 0 0" NavigationUIVisibility="Hidden"/>
+
     </Grid>
 </Window>
