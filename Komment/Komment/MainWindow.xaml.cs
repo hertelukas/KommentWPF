@@ -28,7 +28,6 @@ namespace Komment
             {
                 UpdateUIAfterLogin();
                 NetworkHandler.Initialize();
-                await NetworkHandler.LoadAllNotesAsync();
             }
             else
             {
@@ -68,6 +67,7 @@ namespace Komment
         {
             UsernameTextBlock.Text = $"Hello {User.username}!";
         }
+
 
         private void TopBar_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
