@@ -45,5 +45,10 @@ namespace Komment
                 NoteView.SelectedIndex = -1;
             }
         }
+
+        private async void CreateNewNoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            await NetworkHandler.PostNoteAsync(new Note(NewNoteInput.Text));
+        }
     }
 }

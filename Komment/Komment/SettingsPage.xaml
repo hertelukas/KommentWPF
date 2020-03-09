@@ -10,8 +10,19 @@
       Title="SettingsPage">
 
     <Grid>
-        <StackPanel>
-            <TextBlock Text="Settings" Foreground="{DynamicResource MaterialDesignDarkForeground}" FontSize="36"/>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="SETTINGS" Foreground="{DynamicResource MaterialDesignDarkForeground}" FontSize="36"/>
+
     </Grid>
 </Page>

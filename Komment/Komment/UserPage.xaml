@@ -9,8 +9,18 @@
       d:DesignHeight="450" d:DesignWidth="800" FontFamily="Raleway"
       Title="UserPage">
     <Grid>
-        <StackPanel>
-            <TextBlock Text="User" Foreground="{DynamicResource MaterialDesignDarkForeground}" FontSize="36"/>
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="USER" Foreground="{DynamicResource MaterialDesignDarkForeground}" FontSize="36"/>
+
     </Grid>
 </Page>
