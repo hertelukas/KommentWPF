@@ -31,7 +31,7 @@ namespace Komment
             UpdateNotesList();
         }
 
-        private void UpdateNotesList()
+        public void UpdateNotesList()
         {
             NoteView.ItemsSource = UserData.Notes;
         }

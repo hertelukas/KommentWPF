@@ -11,7 +11,7 @@ namespace Komment
     {
         readonly UserPage userPage = new UserPage();
         readonly SettingsPage settingsPage = new SettingsPage();
-        readonly HomePage homePage = new HomePage();
+        public readonly HomePage homePage = new HomePage();
 
         public MainWindow()
         {

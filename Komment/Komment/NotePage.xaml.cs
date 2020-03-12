@@ -20,12 +20,35 @@ namespace Komment
     /// </summary>
     public partial class NotePage : Page
     {
+        private readonly Note _currentNote;
+
         public NotePage(Note note)
         {
             InitializeComponent();
 
+            _currentNote = note;
             NoteTitle.Text = note.Title;
             Content.Text = note.Content;
+        }
+
+        private async void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if(!String.IsNullOrEmpty(Content.Text) && !String.IsNullOrEmpty(NoteTitle.Text))
+            {
+                _currentNote.Content = Content.Text;
+                _currentNote.Title = NoteTitle.Text;
+
+                UpdateNoteResponse response = await NetworkHandler.UpdateNoteAsync(_currentNote);
+
+                if (response == UpdateNoteResponse.Success)
+                {
+                    MainWindow mainWindow = (MainWindow)Window.GetWindow(this);
+                    mainWindow.FullScreenFrame.Content = null;
+
+                    mainWindow.homePage.UpdateNotesList();
+                }
+            }
+
         }
     }
 }

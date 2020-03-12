@@ -20,5 +20,12 @@ namespace Komment
         Unauthanticated,
         Error
     }
+
+    public enum UpdateNoteResponse
+    {
+        Success,
+        Unauthanticated,
+        Error
+    }
     
 }

@@ -205,6 +205,18 @@ namespace Komment
             }
         }
 
+        public static async Task<UpdateNoteResponse> UpdateNoteAsync(Note note)
+        {
+            if(note.Title != null || note.Content != null)
+            {
+                return UpdateNoteResponse.Success;
+            }
+            else
+            {
+                return UpdateNoteResponse.Error;
+            }
+        }
+
         #endregion
 
         #region Private functions
