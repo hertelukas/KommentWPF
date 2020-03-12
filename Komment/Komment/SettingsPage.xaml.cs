@@ -24,5 +24,13 @@ namespace Komment
         {
             InitializeComponent();
         }
+
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            UserData.DeleteUser();
+
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
+        }
     }
 }

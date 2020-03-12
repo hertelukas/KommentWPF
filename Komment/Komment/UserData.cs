@@ -44,6 +44,19 @@ namespace Komment
                 await outputFile.WriteLineAsync(User.username);
                 await outputFile.WriteLineAsync(User.password);
             }
-    }
+        }
+
+        public static void DeleteUser()
+        {
+            if(File.Exists(Path.Combine(_savePath + "\\userdata.kmt")))
+            {
+                File.Delete(Path.Combine(_savePath + "\\userdata.kmt"));
+            }
+            else
+            {
+                _ = Logger.LogError("File to delete not found:" + Path.Combine(_savePath + "\\userdata.kmt"));
+            }
+
+        }
     }
 }

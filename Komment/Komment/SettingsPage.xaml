@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Komment"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800" FontFamily="Raleway"
+      d:DesignHeight="450" d:DesignWidth="800" FontFamily="Raleway" Foreground="{DynamicResource MaterialDesignDarkForeground}"
       Title="SettingsPage">
 
     <Grid>
@@ -14,15 +14,29 @@
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" Text="SETTINGS" Foreground="{DynamicResource MaterialDesignDarkForeground}" FontSize="36"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="SETTINGS" FontSize="36"/>
+        <ScrollViewer Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Auto">
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left">
+                <TextBlock Text="Account" FontSize="24" Margin="20 20"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="LogOut" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}"
+                            Foreground="{DynamicResource MaterialDesignDarkForeground}" Padding="0" Click="LogOut_Click">
+                        <materialDesign:PackIcon Kind="Logout"/>
+                    </Button>
+                    <TextBlock Text="Log Out" VerticalAlignment="Center"/>
+                </StackPanel>
 
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
