@@ -28,6 +28,6 @@
                 Padding="0" Click="Save_Click" Foreground="{DynamicResource MaterialDesignDarkForeground}">
             <materialDesign:PackIcon Kind="ContentSave"/>
         </Button>
-        <TextBox x:Name="Content" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True"/>
+        <TextBox x:Name="Content" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1" VerticalAlignment="Top" AcceptsReturn="True" AcceptsTab="True" FontSize="18"/>
     </Grid>
 </Page>
