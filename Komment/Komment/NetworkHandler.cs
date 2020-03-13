@@ -7,6 +7,9 @@ using System.Net.Http;
 
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Net;
+using System.Web.Script.Serialization;
+using System.IO;
 
 namespace Komment
 {
@@ -21,7 +24,6 @@ namespace Komment
 
         public static void Initialize()
         {
-            //Authenticate user here
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Add("username", User.username);
             client.DefaultRequestHeaders.Add("password", User.password);
@@ -207,9 +209,35 @@ namespace Komment
 
         public static async Task<UpdateNoteResponse> UpdateNoteAsync(Note note)
         {
-            if(note.Title != null || note.Content != null)
+            if(note.Title != null)
             {
-                return UpdateNoteResponse.Success;
+                var httpPutRequest = (HttpWebRequest)WebRequest.Create(apiURL + "/notes/" + note._id);
+
+
+                string postData = "content=" + note.Content + "&title=" + note.Title;
+
+                ASCIIEncoding encoding = new ASCIIEncoding();
+                byte[] byte1 = encoding.GetBytes (postData);
+
+                httpPutRequest.ContentType = "application/x-www-form-urlencoded";
+                httpPutRequest.Method = "PUT";
+                httpPutRequest.ContentLength = byte1.Length;
+                httpPutRequest.Headers.Add("username", User.username);
+                httpPutRequest.Headers.Add("password", User.password);
+
+                Stream stream = httpPutRequest.GetRequestStream();
+
+                stream.Write(byte1, 0, byte1.Length);
+
+                var response = await httpPutRequest.GetResponseAsync();
+                
+                using(var streamReader = new StreamReader(response.GetResponseStream()))
+                {
+                    var responseString = streamReader.ReadToEnd();
+                    _ = Logger.LogInfo(responseString);
+                    return UpdateNoteResponse.Success;
+                }
+
             }
             else
             {
