@@ -245,6 +245,34 @@ namespace Komment
             }
         }
 
+        public static async Task<DeleteNoteRespnse> DeleteNoteAsync(Note note)
+        {            
+            return await DeleteNoteAsync(note._id);            
+
+        }
+
+        public static async Task<DeleteNoteRespnse> DeleteNoteAsync(string id)
+        {
+            var httpPutRequest = (HttpWebRequest)WebRequest.Create(apiURL + "/notes/" + id);
+
+
+            ASCIIEncoding encoding = new ASCIIEncoding();
+
+            httpPutRequest.Method = "DELETE";
+            httpPutRequest.Headers.Add("username", User.username);
+            httpPutRequest.Headers.Add("password", User.password);
+
+
+            var response = await httpPutRequest.GetResponseAsync();
+
+            using (var streamReader = new StreamReader(response.GetResponseStream()))
+            {
+                var responseString = streamReader.ReadToEnd();
+                _ = Logger.LogInfo(responseString);
+                return DeleteNoteRespnse.Success;
+            }
+
+        }
         #endregion
 
         #region Private functions

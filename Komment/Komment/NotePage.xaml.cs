@@ -33,7 +33,7 @@ namespace Komment
 
         private async void Save_Click(object sender, RoutedEventArgs e)
         {
-            if(!String.IsNullOrEmpty(Content.Text) && !String.IsNullOrEmpty(NoteTitle.Text))
+            if(!String.IsNullOrEmpty(NoteTitle.Text))
             {
                 _currentNote.Content = Content.Text;
                 _currentNote.Title = NoteTitle.Text;
@@ -42,13 +42,62 @@ namespace Komment
 
                 if (response == UpdateNoteResponse.Success)
                 {
-                    MainWindow mainWindow = (MainWindow)Window.GetWindow(this);
-                    mainWindow.FullScreenFrame.Content = null;
-
-                    mainWindow.homePage.UpdateNotesList();
+                    CloseNote();
                 }
             }
 
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            string messageBoxText = "Do you really want to delete the note?";
+            string caption = "Confirm delete";
+
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            var result = MessageBox.Show(messageBoxText, caption, button, icon);
+
+            switch (result)
+            {
+                case MessageBoxResult.None:
+                    break;
+                case MessageBoxResult.OK:
+                    break;
+                case MessageBoxResult.Cancel:
+                    break;
+                case MessageBoxResult.Yes:
+                    DeleteNote();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private async void DeleteNote()
+        {
+            var response = await NetworkHandler.DeleteNoteAsync(_currentNote);
+            switch (response)
+            {
+                case DeleteNoteRespnse.Success:
+                    UserData.Notes.Remove(_currentNote);
+                    CloseNote();
+                    break;
+                case DeleteNoteRespnse.Unauthanticated:
+                    break;
+                case DeleteNoteRespnse.Error:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void CloseNote()
+        {
+            MainWindow mainWindow = (MainWindow)Window.GetWindow(this);
+            mainWindow.FullScreenFrame.Content = null;
+            mainWindow.homePage.UpdateNotesList();
         }
     }
 }

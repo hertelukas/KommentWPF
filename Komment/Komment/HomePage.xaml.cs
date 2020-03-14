@@ -33,6 +33,7 @@ namespace Komment
 
         public void UpdateNotesList()
         {
+            NoteView.ItemsSource = null;
             NoteView.ItemsSource = UserData.Notes;
         }
 
@@ -42,9 +43,7 @@ namespace Komment
             {
                 var index = NoteView.SelectedIndex;
                 Note note = UserData.Notes[index];
-
-                MainWindow mainWindow = (MainWindow)Window.GetWindow(this);
-                mainWindow.FullScreenFrame.Content = new NotePage(note);
+                OpenNote(note);
 
                 NoteView.SelectedIndex = -1;
             }
@@ -52,7 +51,17 @@ namespace Komment
 
         private async void CreateNewNoteButton_Click(object sender, RoutedEventArgs e)
         {
-            await NetworkHandler.PostNoteAsync(new Note(NewNoteInput.Text));
+            Note note = new Note(NewNoteInput.Text);
+            await NetworkHandler.PostNoteAsync(note);
+            await NetworkHandler.LoadAllNotesAsync();
+            OpenNote(UserData.Notes[UserData.Notes.Count-1]);
+           
+        }
+
+        private void OpenNote(Note note)
+        {
+            MainWindow mainWindow = (MainWindow)Window.GetWindow(this);
+            mainWindow.FullScreenFrame.Content = new NotePage(note);
         }
     }
 }

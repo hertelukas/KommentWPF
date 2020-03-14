@@ -28,4 +28,10 @@ namespace Komment
         Error
     }
     
+    public enum DeleteNoteRespnse
+    {
+        Success,
+        Unauthanticated,
+        Error
+    }
 }
