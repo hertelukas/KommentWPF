@@ -12,6 +12,8 @@
     <Grid>
         <StackPanel>
             <Grid x:Name="TopBar" Background="{DynamicResource PrimaryHueMidBrush}" Height="40" MouseDown="TopBar_MouseDown">
+                <Image Source="Icon2.ico" Width="30" HorizontalAlignment="Left" Margin="10 0 0 0"/>
+                <TextBlock Text="Komment" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18"/>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0" VerticalAlignment="Center">
                     <Button x:Name="Minimize" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Click="Minimize_Click">
                         <materialDesign:PackIcon Kind="WindowMinimize"/>

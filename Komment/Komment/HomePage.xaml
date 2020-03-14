@@ -27,14 +27,14 @@
         <ListView Grid.Row="2" Grid.Column="1" x:Name="NoteView" SelectionChanged="NoteView_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding Path=Title}" />
+                    <GridViewColumn Width="250" DisplayMemberBinding="{Binding Path=Title}" />
                 </GridView>
             </ListView.View>
         </ListView>
         
         <TextBox Grid.Row="2" Grid.Column="3" x:Name="NewNoteInput" materialDesign:HintAssist.Hint="Create a new Note" Foreground="White" FontSize="18" />        
         <Button Grid.Row="2" Grid.Column="4" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="CreateNewNoteButton" Width="30" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" Padding="0" Click="CreateNewNoteButton_Click">
-            <materialDesign:PackIcon Kind="Create"/>
+            <materialDesign:PackIcon Kind="Plus"/>
         </Button>
     </Grid>
 </Page>
