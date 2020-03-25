@@ -1,0 +1,37 @@
+﻿<Page x:Class="Komment.FolderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Komment"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="900" FontFamily="Raleway" 
+      Title="FolderPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="Auto" MinWidth="250"/>
+            <ColumnDefinition Width="Auto" MinWidth="20"/>
+            <ColumnDefinition Width="Auto" MinWidth="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="FOLDER" FontSize="36" Foreground="White"/>
+
+        <ListView Grid.Row="2" Grid.Column="1" x:Name="FolderView">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="250"  />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+
+    </Grid>
+</Page>

@@ -212,14 +212,20 @@ namespace Komment
             if(note.Title != null)
             {
                 var httpPutRequest = (HttpWebRequest)WebRequest.Create(apiURL + "/notes/" + note._id);
+                note.Folders.Add("Gzuz");
+                note.Folders.Add("Add");
 
+                //string postData = "content=" + note.Content + "&title=" + note.Title;
+                string postData = JsonConvert.SerializeObject(note);
 
-                string postData = "content=" + note.Content + "&title=" + note.Title;
+                postData = postData.Replace("Folders", "folders");
+                postData = postData.Replace("Title", "title");
+                postData = postData.Replace("Content", "content");
 
-                ASCIIEncoding encoding = new ASCIIEncoding();
+                UTF8Encoding encoding = new UTF8Encoding();
                 byte[] byte1 = encoding.GetBytes (postData);
 
-                httpPutRequest.ContentType = "application/x-www-form-urlencoded";
+                httpPutRequest.ContentType = "application/json; charset=UTF-8";
                 httpPutRequest.Method = "PUT";
                 httpPutRequest.ContentLength = byte1.Length;
                 httpPutRequest.Headers.Add("username", User.username);

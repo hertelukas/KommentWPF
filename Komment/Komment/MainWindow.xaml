@@ -46,6 +46,12 @@
                 </ListViewItem>
                 <ListViewItem Height="60">
                     <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Folder" Width="30" Height="30" VerticalAlignment="Center"  Margin="10"/>
+                        <TextBlock Text="Folder" FontSize="24" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Settings" Width="30" Height="30" VerticalAlignment="Center"  Margin="10"/>
                         <TextBlock Text="Settings" FontSize="24" VerticalAlignment="Center"/>
                     </StackPanel>

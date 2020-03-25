@@ -12,6 +12,7 @@ namespace Komment
         readonly UserPage userPage = new UserPage();
         readonly SettingsPage settingsPage = new SettingsPage();
         public readonly HomePage homePage = new HomePage();
+        readonly FolderPage folderPage = new FolderPage();
 
         public MainWindow()
         {
@@ -100,6 +101,10 @@ namespace Komment
                     break;
 
                 case 2:
+                    MainWindowFrame.Content = folderPage;
+                    break;
+
+                case 3:
                     MainWindowFrame.Content = settingsPage;
                     break;
 

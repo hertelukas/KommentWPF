@@ -12,7 +12,7 @@ namespace Komment
         public string Title { get; set; }
         public string Content { get; set; }
         public string LastEdited { get; set; }
-        public string[] Folders;
+        public List<string> Folders = new List<string>();
         public string _id { get; set; }
 
         public Note(string _title)
