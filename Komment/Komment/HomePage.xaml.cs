@@ -63,5 +63,10 @@ namespace Komment
             MainWindow mainWindow = (MainWindow)Window.GetWindow(this);
             mainWindow.FullScreenFrame.Content = new NotePage(note);
         }
+
+        private async void Reload_Click(object sender, RoutedEventArgs e)
+        {
+            await NetworkHandler.LoadAllNotesAsync();
+        }
     }
 }
