@@ -212,8 +212,6 @@ namespace Komment
             if(note.Title != null)
             {
                 var httpPutRequest = (HttpWebRequest)WebRequest.Create(apiURL + "/notes/" + note._id);
-                note.Folders.Add("Gzuz");
-                note.Folders.Add("Add");
 
                 //string postData = "content=" + note.Content + "&title=" + note.Title;
                 string postData = JsonConvert.SerializeObject(note);

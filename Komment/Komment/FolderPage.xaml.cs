@@ -20,7 +20,11 @@ namespace Komment
     /// </summary>
     public partial class FolderPage : Page
     {
-        private List<string> folders = new List<string>();
+        public List<Folder> folders = new List<Folder>();
+
+        List<string> currentFolderStringList = new List<string>();
+
+        private int _highestLevel = 0;
         public FolderPage()
         {
             InitializeComponent();
@@ -29,16 +33,56 @@ namespace Komment
         
         private void SetFolders(object sender, EventArgs e)
         {
+            FolderView1.Visibility = Visibility.Visible;
+            FolderView2.Visibility = Visibility.Collapsed;
+            
             foreach (var note in UserData.Notes)
             {
-                foreach (string folder in note.Folders)
+                int i = 0;
+                foreach (string folderName in note.Folders)
                 {
+                    Folder folder = new Folder
+                    {
+                        Name = folderName,
+                        Level = i
+                    };
+                    if (folder.Level != 0)
+                        folder.ParentFolder = folders[folders.Count - 1];
+
                     folders.Add(folder);
-                    _ = Logger.LogInfo(folder);
+                    if (_highestLevel < i)
+                        _highestLevel = i;
+                    i++;
                 }
             }
 
-            FolderView.ItemsSource = folders;
+            foreach (var folder in folders)
+            {
+                if (folder.Level == 0)
+                    currentFolderStringList.Add(folder.Name);
+            }
+
+
+            FolderView1.ItemsSource = currentFolderStringList;
+            
+        }
+
+        private void FolderView1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            FolderView2.ItemsSource = null;
+            FolderView1.Width = 100;
+            FolderView2.Visibility = Visibility.Visible;
+            currentFolderStringList.Clear();
+
+            //Find the note 
+            foreach (var folder in folders)
+            {
+                if (folder.Level == 1 && folder.ParentFolder.Name == FolderView1.SelectedValue.ToString())
+                    currentFolderStringList.Add(folder.Name);
+            }
+
+
+            FolderView2.ItemsSource = currentFolderStringList;
         }
     }
 }

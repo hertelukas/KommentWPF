@@ -24,7 +24,15 @@
 
         <TextBlock Grid.Row="1" Grid.Column="1" Text="FOLDER" FontSize="36" Foreground="White"/>
 
-        <ListView Grid.Row="2" Grid.Column="1" x:Name="FolderView">
+        <ListView Grid.Row="2" Grid.Column="1" x:Name="FolderView1" SelectionChanged="FolderView1_SelectionChanged" HorizontalAlignment="Left">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="250"  />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ListView Grid.Row="2" MinWidth="250" Grid.Column="1" x:Name="FolderView2" Margin="100 0 0 0" HorizontalAlignment="Left">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="250"  />
